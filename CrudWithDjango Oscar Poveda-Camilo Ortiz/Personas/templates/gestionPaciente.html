@@ -1,0 +1,83 @@
+{% extends "./base.html" %}
+
+{% block title %} Gestion de Pacientes {% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4 ">
+        <h2>Gestion de Pacientes</h2><br>
+        <div class="card ">
+            <div class="card-body">
+                <form action="/registrarPacientes/" method="POST"> {% csrf_token %}
+                    <div class="form-group py-2">
+                        <input type="text" id="txtCodigo" name="txtCodigo" class="form-control" placeholder="Codigo" minlength="5" maxlength="20" required>
+                    </div>
+                    <div class="form-group py-2">
+                        <input type="text" id="txtNombre" name="txtNombre" class="form-control" placeholder="Nombre" maxlength="50" required>
+                    </div>
+                    <div class="form-group py-2">
+                        <input type="text" id="txtApellido" name="txtApellido" class="form-control" placeholder="Apellido" maxlength="50" required>
+                    </div>
+                    <div class="form-group py-2">
+                        <input type="text" id="txtEdad" name="txtEdad" class="form-control" placeholder="Edad" maxlength="3" required>
+                    </div>
+                    <div class="form-group py-2">
+                        <input type="text" id="txtPeso" name="txtPeso" class="form-control" placeholder="Peso" maxlength="3" required>
+                    </div>
+                    <div class="form-group py-2">
+                        <input type="text" id="txtBpm" name="txtBpm" class="form-control" placeholder="BPM" maxlength="3" required>
+                    </div>
+                    <div class="form-group py-2">
+                        <input type="text" id="txtOxigeno" name="txtOxigeno" class="form-control" placeholder="Oxigeno" maxlength="3" required>
+                    </div>
+                    <div class="form-group py-2">
+                        <input type="text" id="txtStress" name="txtStress" class="form-control" placeholder="Estres" maxlength="2" required>
+                    </div>
+                    <div class="form-group d-grid gap-2 py-2">
+                        <button type="submit" class="btn btn-success btn-block text-light ">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
+        <h1>Listado de Pacientes</h1><br>
+        <div class="table-responsive py-2">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Codigo</th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Edad</th>
+                        <th>Peso</th>
+                        <th>Bpm</th>
+                        <th>Porcentaje de Oxigeno</th>
+                        <th>Nivel de Estress</th>
+                        <th colspan="2">Opciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for c in pacientes %}
+                    <tr>
+                        <td>{{forloop.counter}}</td>
+                        <td>{{c.codigo}}</td>
+                        <td>{{c.nombre}}</td>
+                        <td>{{c.apellido}}</td>
+                        <td>{{c.edad}}</td>
+                        <td>{{c.peso}}</td>
+                        <td>{{c.bpm}}</td>
+                        <td>{{c.oxigeno}}</td>
+                        <td>{{c.stress}}</td>
+                        <td><a href="editarPaciente/{{c.codigo}}" class="btn btn-info text-light">Editar</a></td>
+                        <td><a href="eliminarPaciente/{{c.codigo}}" class="btn btn-danger">Eliminar</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+{% endblock content %}
